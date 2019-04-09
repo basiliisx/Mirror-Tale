@@ -1,10 +1,11 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mirror.tale.rpg;
-
 /**
  *
  * @author Zygmut
@@ -15,10 +16,11 @@ public class PC {
     Integer hp;
     Integer accuracy;
     Integer inRoom = 0;
+    ArrayList<Item> item = new ArrayList<>();
 
     public String look() {
         String stats;
-        stats = ("Hp: " + hp) + "\n" + ("Accuracy: " + accuracy);
+        stats = ("HP: " + hp) + "\n" + ("ACC: " + accuracy);
         return stats;
     }
 

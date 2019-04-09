@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mirror.tale.rpg;
 
 /**
  *
@@ -11,9 +10,12 @@ package mirror.tale.rpg;
  */
 public class Troll extends NPC {
 
-    String name = "A troll";
-    String desc = "A troll standing menacing";
-    String id = "Troll";
-    int hp = 10;
-    int accuracy = 25;
+    public Troll() {
+        name = "a troll";
+        desc = "A TROLL standing menacing";
+        id = "Troll";
+        hp = 10;
+        accuracy = 25;
+    }
+
 }

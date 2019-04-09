@@ -6,6 +6,8 @@
             <name>Mirror-Tale-RPG</name>
             <source-roots>
                 <root id="src.dir"/>
+                <root id="src.NPCS.dir"/>
+                <root id="src.IITEMS.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

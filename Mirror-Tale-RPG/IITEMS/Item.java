@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mirror.tale.rpg;
-
-import java.util.ArrayList;
 
 /**
  *
  * @author Zygmut
  */
-public class Game_objects {
-    static PC pc = new PC();
-    static ArrayList<Room> room = new ArrayList<Room>();
+public class Item {
+    String name;
+    String id = "Item";
+    String desc;
+    String fulldesc;
+    boolean isWeareable = false;
+    String wearloc;
 }

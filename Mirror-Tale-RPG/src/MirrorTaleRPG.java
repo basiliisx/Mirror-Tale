@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mirror.tale.rpg;
 
 /**
  *
  * @author Zygmut
  */
 public class MirrorTaleRPG {
+
     static Game_Logic gl = new Game_Logic();
 
     public void main() {
-
+        Game_objects.initializeNPCArray();
+        Game_objects.initializeITEMArray();
         while (true) {
             game_loop();
         }

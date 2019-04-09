@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package mirror.tale.rpg;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,8 @@ public class Room {
     String name;
     List<String> desc = new ArrayList<>();
     List<String> exits = new ArrayList<>();
+    List<NPC> npc = new ArrayList<>();
+    ArrayList<Item> item = new ArrayList<>();
 /**
  * Constructor de una sala
  * @param x 
