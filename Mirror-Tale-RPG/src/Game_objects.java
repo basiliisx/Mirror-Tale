@@ -37,5 +37,6 @@ public class Game_objects {
         ITEMDataBase.add(new Item());
         ITEMDataBase.add(new Rusty_sword());
         ITEMDataBase.add(new Wooden_sword());
+        ITEMDataBase.add(new Rusty_ring());
     }
 }

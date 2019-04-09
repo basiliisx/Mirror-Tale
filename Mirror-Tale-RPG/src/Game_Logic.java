@@ -61,6 +61,15 @@ public class Game_Logic {
         if (x[0].equals("get")) {
             get(x);
         }
+        if (x[0].equals("wear")) {
+            Game_objects.pc.wear(x);
+        }
+        if (x[0].equals("eq")) {
+            Game_objects.pc.equipment();
+        }
+        if (x[0].equals("remove")) {
+            Game_objects.pc.remove(x);
+        }
     }
 
     /**
@@ -112,8 +121,8 @@ public class Game_Logic {
             if (x[1].equals("self")) {
                 System.out.println(Game_objects.pc.look());
                 System.out.println("You're carrying: ");
-                for (int i = 0; i < Game_objects.pc.item.size(); i++) {
-                    System.out.println(Game_objects.pc.item.get(i).name);
+                for (int i = 0; i < Game_objects.pc.items.size(); i++) {
+                    System.out.println(Game_objects.pc.items.get(i).name);
                 }
             }
             for (int i = 0; i < Game_objects.room.size(); i++) {
@@ -136,9 +145,24 @@ public class Game_Logic {
         if (x.length == 3) {
             if (x[1].equals("self")) {
                 System.out.println("Item that you're carrying");
-                for (int i = 0; i < Game_objects.pc.item.size(); i++) {
-                    if (x[2].equalsIgnoreCase(Game_objects.pc.item.get(i).id)) {
-                        System.out.println(Game_objects.pc.item.get(i).fulldesc);
+                boolean found = false;
+                for (int i = 0; i < Game_objects.pc.items.size(); i++) {
+                    if (!found) {
+                        if (x[2].equalsIgnoreCase(Game_objects.pc.items.get(i).id)) {
+                            System.out.println(Game_objects.pc.items.get(i).fulldesc);
+                            found = true;
+                            break;
+                        }
+
+                    }
+                }
+                for (int i = 0; i < Game_objects.pc.wornitems.size(); i++) {
+                    if (!found) {
+                        if (x[2].equalsIgnoreCase(Game_objects.pc.wornitems.get(i).id)) {
+                            System.out.println(Game_objects.pc.wornitems.get(i).fulldesc);
+                            break;
+                        }
+
                     }
                 }
             }
@@ -195,7 +219,7 @@ public class Game_Logic {
                             if (x[1].equalsIgnoreCase(Game_objects.room.get(j).item.get(k).id)) {
                                 Item localitem = (Item) Game_objects.room.get(j).item.get(k);
 
-                                Game_objects.pc.item.add(localitem);
+                                Game_objects.pc.items.add(localitem);
                                 System.out.println("You picked up " + localitem.name);
                                 Game_objects.room.get(j).item.remove(k);
                                 break;
