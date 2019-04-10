@@ -4,7 +4,12 @@
  * and open the template in the editor.
  */
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 /**
  *
@@ -15,17 +20,57 @@ public class Game_Logic {
     public enum commands {
         look, summon, create, get, wear, remove
     }
-
+/**
+ * Creacion del mapa 
+ */
     public Game_Logic() {
         //Creacion de una sala
-        Game_objects.room.add(new Room(1));
-        Game_objects.room.get(0).name = "Floating island";
-        Game_objects.room.get(0).desc.add("Description 1");
-        Game_objects.room.get(0).desc.add("Description 2");
-        Game_objects.room.get(0).desc.add("Description 3");
-        Game_objects.room.get(0).desc.add("Description 4");
-        Game_objects.room.get(0).exits.add("North 2");
-        Game_objects.room.get(0).exits.add("South 3");
+        Game_objects.room.add(new Room(0));
+        List<String> roomInfo = new ArrayList<>();
+        try {
+            roomInfo = readLines("Textfiles/RoomDescriptions.txt");
+            //*-System.out.println(roomInfo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < roomInfo.size(); i++) {
+            String[] firstWord = roomInfo.get(i).split(" ");
+            String[] everythigElse = roomInfo.get(i).split(": "); //this
+            if (firstWord[0].equals("RoomName:")) {
+                Integer currentRoomSize = Game_objects.room.size();
+                Game_objects.room.add(new Room(currentRoomSize));
+                Game_objects.room.get(Game_objects.room.size() - 1).name = everythigElse[1];
+                Game_objects.room.get(Game_objects.room.size() - 1).number = currentRoomSize;
+
+                int roomcount = 0;
+                for (int j = 0; j < roomInfo.size(); j++) {
+                    String[] nextFirstWord = roomInfo.get(j).split(" ");
+                    if (nextFirstWord[0].equals("RoomName:")) {
+                        roomcount++;
+                    }
+                    if (roomcount == currentRoomSize) {
+                        if (nextFirstWord[0].equals("Desc:")) {
+                            String[] nextEverythingElse = roomInfo.get(j).split(": ");
+                            Game_objects.room.get(Game_objects.room.size() - 1).desc.add(nextEverythingElse[1]);
+                        }
+                    }
+                }
+                roomcount = 0;
+                for (int j = 0; j < roomInfo.size(); j++) {
+                    String[] nextFirstWord = roomInfo.get(j).split(" ");
+                    if (nextFirstWord[0].equals("RoomName:")) {
+                        roomcount++;
+                    }
+                    if (roomcount == currentRoomSize) {
+                        if (nextFirstWord[0].equals("Exit:")) {
+                            String[] nextEverythingElse = roomInfo.get(j).split(": ");
+                            Game_objects.room.get(Game_objects.room.size()-1).exits.add(nextEverythingElse[1]);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     /**
@@ -75,6 +120,23 @@ public class Game_Logic {
             help(x);
         }
     }
+/**
+ * Lee las lineas de el archivo de texto en el que se encuentra el nivel
+ * @param path
+ * @return
+ * @throws IOException 
+ */
+    public List<String> readLines(String path) throws IOException {
+        FileReader fileReader = new FileReader(path);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        List<String> lines = new ArrayList<>();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            lines.add(line);
+        }
+        bufferedReader.close();
+        return lines;
+    }
 
     /**
      * Permite al usuario crear el heroe
@@ -86,7 +148,7 @@ public class Game_Logic {
         System.out.println("By the grace of the creator, you have been given some stats");
         Game_objects.pc.HP = 100;
         Game_objects.pc.ACC = 75;
-        Game_objects.pc.inRoom = 1;
+        Game_objects.pc.inRoom = 2;
         System.out.println(Game_objects.pc.look() + "\n" + "Those are your stats, hero");
     }
 
