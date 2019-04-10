@@ -8,10 +8,10 @@
  *
  * @author Zygmut
  */
-public class NPC {
+public abstract class NPC {
 
-    String name = "an NPC";
-    String desc = "A simple NPC";
+    String name;
+    String desc;
     String id = "NPC";
     int hp;
     int accuracy;

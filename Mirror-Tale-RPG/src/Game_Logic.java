@@ -12,6 +12,10 @@ import java.util.Scanner;
  */
 public class Game_Logic {
 
+    public enum commands {
+        look, summon, create, get, wear, remove
+    }
+
     public Game_Logic() {
         //Creacion de una sala
         Game_objects.room.add(new Room(1));
@@ -64,11 +68,11 @@ public class Game_Logic {
         if (x[0].equals("wear")) {
             Game_objects.pc.wear(x);
         }
-        if (x[0].equals("eq")) {
-            Game_objects.pc.equipment();
-        }
         if (x[0].equals("remove")) {
             Game_objects.pc.remove(x);
+        }
+        if (x[0].equals("help")) {
+            help(x);
         }
     }
 
@@ -80,8 +84,8 @@ public class Game_Logic {
         Scanner sc = new Scanner(System.in);
         Game_objects.pc.name = sc.nextLine();
         System.out.println("By the grace of the creator, you have been given some stats");
-        Game_objects.pc.hp = 100;
-        Game_objects.pc.accuracy = 75;
+        Game_objects.pc.HP = 100;
+        Game_objects.pc.ACC = 75;
         Game_objects.pc.inRoom = 1;
         System.out.println(Game_objects.pc.look() + "\n" + "Those are your stats, hero");
     }
@@ -120,9 +124,13 @@ public class Game_Logic {
         if (x.length == 2) {
             if (x[1].equals("self")) {
                 System.out.println(Game_objects.pc.look());
-                System.out.println("You're carrying: ");
+                System.out.println("Inventory:");
                 for (int i = 0; i < Game_objects.pc.items.size(); i++) {
                     System.out.println(Game_objects.pc.items.get(i).name);
+                }
+                System.out.println("Wearing:");
+                for (int i = 0; i < Game_objects.pc.wornitems.size(); i++) {
+                    System.out.println(Game_objects.pc.wornitems.get(i).name + " in " + Game_objects.pc.wornitems.get(i).wearloc);
                 }
             }
             for (int i = 0; i < Game_objects.room.size(); i++) {
@@ -254,6 +262,51 @@ public class Game_Logic {
                                 e.printStackTrace();
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Imprime un String con todos los comandos que el usuario puede hacer
+     *
+     * @param x
+     */
+    public void help(String[] x) {
+        String help = "";
+        if (x.length == 1) {
+            for (int i = 0; i < commands.values().length; i++) {
+                help += commands.values()[i] + ", ";
+            }
+            System.out.println(help);
+        }
+        if (x.length == 2) {
+            for (int i = 0; i < commands.values().length; i++) {
+                if (x[1].equalsIgnoreCase(commands.values()[i].toString())) {
+                    if (x[1].equalsIgnoreCase("look")) {
+                        System.out.println("Allows you to see what's inside a room." + "\n" + "You can also check you'r stats by using look self and see other creature or item stats by doing so." + "\n" + "If you want to check an item you have, use look self and the item id");
+                    }
+                    if (x[1].equalsIgnoreCase("exitgame")) {
+                        System.out.println("Allows you to exit the game");
+                    }
+                    if (x[1].equalsIgnoreCase("summon")) {
+                        System.out.println("Allows you to summon a creature given the NPC id");
+                    }
+                    if (x[1].equalsIgnoreCase("create")) {
+                        System.out.println("Allows you to create an item given the id");
+                    }
+                    if (x[1].equalsIgnoreCase("get")) {
+                        System.out.println("Allows you to grab an item and put it in your inventory given the id");
+                    }
+                    if (x[1].equalsIgnoreCase("wear")) {
+                        System.out.println("Allows you to wear an item. Only worn items apply it's bonuses given the id");
+                    }
+                    if (x[1].equalsIgnoreCase("remove")) {
+                        System.out.println("Allows you to remove one worn item given the id");
+                    }
+                    if (x[1].equalsIgnoreCase("help")) {
+                        System.out.println("Allows you to see all user commands");
                     }
                 }
             }

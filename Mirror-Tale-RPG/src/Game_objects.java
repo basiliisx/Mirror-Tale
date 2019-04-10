@@ -24,19 +24,18 @@ public class Game_objects {
      * aqui
      */
     public static void initializeNPCArray() {
-        NPCDataBase.add(new NPC());
         NPCDataBase.add(new Troll());
         NPCDataBase.add(new Skeleton());
     }
 
     /**
-     * Base de datos de Items. Si uno quiere añadir otro NPC tambien debe ponerlo
-     * aqui
+     * Base de datos de Items. Si uno quiere añadir otro item tambien debe
+     * ponerlo aqui
      */
     public static void initializeITEMArray() {
-        ITEMDataBase.add(new Item());
         ITEMDataBase.add(new Rusty_sword());
-        ITEMDataBase.add(new Wooden_sword());
+        ITEMDataBase.add(new Rusty_shield());
         ITEMDataBase.add(new Rusty_ring());
+        ITEMDataBase.add(new Wooden_sword());
     }
 }

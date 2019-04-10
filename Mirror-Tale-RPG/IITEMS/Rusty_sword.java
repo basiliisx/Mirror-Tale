@@ -8,17 +8,16 @@
  *
  * @author Zygmut
  */
-public class Rusty_sword extends Item {
+public class Rusty_sword extends Weapon {
 
-    int accuracy = 10;
-    int damage = 20;
-    
     public Rusty_sword() {
         name = "Rusty sword";
         id = "Rusty_sword";
-        desc = "a rusty sword lies in front of you";
+        desc = "A rusty sword lies in front of you";
         fulldesc = "A sword given to the poorest fella around. What a huge mess";
-        isWeareable = true;
-        wearloc = "wield";
+        ACC = 10;
+        DMG = 15;
+        TDMG = 5;
+
     }
 }

@@ -11,7 +11,6 @@
 public class Rusty_ring extends Item {
 
     int accuracy = 10;
-    int damage = 20;
     
     public Rusty_ring() {
         name = "Rusty ring";

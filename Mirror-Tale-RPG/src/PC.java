@@ -13,15 +13,16 @@ import java.util.ArrayList;
 public class PC {
 
     String name;
-    Integer hp;
-    Integer accuracy;
+    Integer HP;
+    Integer ACC;
+    Integer ARM = 0;
     Integer inRoom = 0;
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<Item> wornitems = new ArrayList<>();
 
     public String look() {
         String stats;
-        stats = ("HP: " + hp) + "\n" + ("ACC: " + accuracy);
+        stats = ("HP: " + HP) + "\n" + ("ACC: " + ACC);
         return stats;
     }
 
@@ -57,7 +58,6 @@ public class PC {
     }
 
     public void remove(String[] x) {
-        System.out.println(wornitems.size());
         for (int i = 0; i < wornitems.size(); i++) {
             if (x[1].equalsIgnoreCase(wornitems.get(i).id)) {
                 System.out.println("You remove " + wornitems.get(i).name);
@@ -66,11 +66,4 @@ public class PC {
             }
         }
     }
-
-    public void equipment() {
-        for (int i = 0; i < wornitems.size(); i++) {
-            System.out.println(wornitems.get(i).name + " : " + wornitems.get(i).wearloc);
-        }
-    }
-
 }

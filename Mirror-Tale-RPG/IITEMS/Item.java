@@ -8,11 +8,11 @@
  *
  * @author Zygmut
  */
-public class Item {
+public abstract class Item {
     String name;
     String id = "Item";
     String desc;
     String fulldesc;
-    boolean isWeareable = false;
+    boolean isWeareable;
     String wearloc;
 }
