@@ -41,29 +41,38 @@ public class PC {
             for (int i = 0; i < wornitems.size(); i++) {
                 for (int j = 0; j < items.size(); j++) {
                     if (x[1].equalsIgnoreCase(items.get(j).id) && items.get(j).isWeareable) {
-                        if (items.get(i).wearloc.equals(wornitems.get(j).wearloc)) {
+                        if (items.get(j).wearloc.equals(wornitems.get(i).wearloc)) { //Here a bug?
                             System.out.println("You already have something worn in that location");
                             isWearing = true;
                         }
                     }
+                    if (!isWearing) {
+                        wornitems.add(items.get(j));
+                        System.out.println("You're now wearing a " + items.get(j).name);
+                        items.remove(i);
+                        break;
+                    }
                 }
-                if (!isWearing) {
-                    wornitems.add(items.get(i));
-                    System.out.println("You're now wearing a " + items.get(i).name);
-                    items.remove(i);
-                    break;
-                }
+
             }
         }
     }
 
     public void remove(String[] x) {
-        for (int i = 0; i < wornitems.size(); i++) {
-            if (x[1].equalsIgnoreCase(wornitems.get(i).id)) {
-                System.out.println("You remove " + wornitems.get(i).name);
-                items.add(wornitems.get(i));
-                wornitems.remove(i);
+        if (x.length == 1) {
+            System.out.println("remove what");
+        }
+        if (x.length == 2) {
+            for (int i = 0; i < wornitems.size(); i++) {
+                if (x[1].equalsIgnoreCase(wornitems.get(i).id)) {
+                    System.out.println("You remove " + wornitems.get(i).name);
+                    items.add(wornitems.get(i));
+                    wornitems.remove(i);
+                    System.out.println(items.size());
+                    System.out.println(wornitems.size());
+                }
             }
         }
+
     }
 }

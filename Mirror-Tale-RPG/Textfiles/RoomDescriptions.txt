@@ -6,7 +6,7 @@ Desc: Description 3
 Desc: Description 4
 Exit: East 2
 Exit: South 3
-RoomName: Goblin Mine
+RoomName: isla 2
 Number: 2
 Desc: Description 1
 Desc: Description 2
@@ -14,14 +14,14 @@ Desc: Description 3
 Desc: Description 4
 Exit: West 1
 Exit: South 4
-RoomName: Floating island
+RoomName: isla 3
 Number: 3
 Desc: Description 1
 Desc: Description 2
 Desc: Description 3
 Desc: Description 4
 Exit: North 1
-RoomName: Floating island
+RoomName: Isla 4
 Number: 4
 Desc: Description 1
 Desc: Description 2
