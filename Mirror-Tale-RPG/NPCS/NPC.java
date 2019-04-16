@@ -13,12 +13,16 @@ public abstract class NPC {
     String name;
     String desc;
     String id = "NPC";
-    int hp;
-    int accuracy;
+    Integer MAXhp;
+    Integer hp;
+    Integer accuracy;
+    Integer armour;
+    Integer atack;
+    Boolean canAtack;
 
     public String look() {
         String stats;
-        stats = ("HP: " + hp) + "\n" + ("ACC: " + accuracy);
+        stats = ("HP: " + MAXhp + '/' + hp) + "\n" + ("ACC: " + accuracy);
         return stats;
     }
 

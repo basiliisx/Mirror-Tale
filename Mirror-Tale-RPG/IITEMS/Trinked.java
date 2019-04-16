@@ -11,6 +11,7 @@
 public abstract class Trinked extends Item {
     Integer ARM;
     Integer InventorySpace;
+    Integer ACC;
     
     public Trinked(){
         isWeareable = true;

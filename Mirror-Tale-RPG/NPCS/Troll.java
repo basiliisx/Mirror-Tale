@@ -14,8 +14,12 @@ public class Troll extends NPC {
         name = "a troll";
         desc = "A TROLL standing menacing";
         id = "Troll";
-        hp = 10;
+        MAXhp = 10;
+        hp = MAXhp;
         accuracy = 25;
+        armour = 5;
+        atack = 5;
+        canAtack = true;
     }
 
 }

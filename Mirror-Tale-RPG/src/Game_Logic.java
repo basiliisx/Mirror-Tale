@@ -186,6 +186,9 @@ public class Game_Logic {
             case "exit":
                 exitgame();
                 break;
+            case "atack":
+                Game_objects.CL.atack(x);
+                break;
             default:
                 System.out.println("Not a valid option");
                 break;

@@ -14,6 +14,7 @@ import java.util.List;
 public class Game_objects {
 
     static PC pc = new PC();
+    static Combat_logic CL = new Combat_logic();
     static ArrayList<Room> room = new ArrayList<Room>();
 
     static List<Object> ITEMDataBase = new ArrayList<Object>();

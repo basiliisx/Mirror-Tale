@@ -14,8 +14,12 @@ public class Skeleton extends NPC {
         name = "an skeleton";
         desc = "An SKELETON standing with a blue jacket";
         id = "Skeleton";
-        hp = 10;
+        MAXhp = 10;
+        hp = MAXhp;
         accuracy = 25;
+        armour = 0;
+        atack= 5;
+        canAtack = true;
     }
 
 }

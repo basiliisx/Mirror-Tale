@@ -37,6 +37,9 @@ public class PC {
             if (wornitems.isEmpty()) {
                 for (int i = 0; i < items.size(); i++) {
                     if (x[1].equalsIgnoreCase(items.get(i).id) && items.get(i).isWeareable) {
+                        if (items.get(i).getClass().equals("Trinked")) {
+                            System.out.println("trinked");
+                        }
                         wornitems.add(items.get(i));
                         System.out.println("You're now wearing a " + items.get(i).name);
                         items.remove(i);
