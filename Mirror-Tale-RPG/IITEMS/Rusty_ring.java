@@ -8,16 +8,13 @@
  *
  * @author Zygmut
  */
-public class Rusty_ring extends Item {
+public class Rusty_ring extends Trinked {
 
-    int accuracy = 10;
-    
     public Rusty_ring() {
         name = "Rusty ring";
         id = "Rusty_ring";
         desc = "Some sort of rust onion ring lies in front of you";
         fulldesc = "Why would someone put this thing on, you'll get 7 different types of tetanus";
-        isWeareable = true;
-        wearloc = "finger";
+        ACC = 10;
     }
 }

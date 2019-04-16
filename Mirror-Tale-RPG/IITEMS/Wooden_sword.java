@@ -18,8 +18,8 @@ public class Wooden_sword extends Weapon {
         id = "Wooden_sword";
         desc = "A wood sword lies in front of you";
         fulldesc = "A sword made purely by wood. Maybe it belonged to a child in the past";
-        ACC = 10;
         DMG = 15;
         TDMG = 5;
+        ACC = 10;
     }
 }

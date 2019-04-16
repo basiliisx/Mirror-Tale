@@ -1,5 +1,3 @@
+rusty_shield 1
 rusty_ring 1
-rusty_shield 2
-wooden_sword 4
-rusty_sword 3
-health_potion 1
+rusty_sword 1

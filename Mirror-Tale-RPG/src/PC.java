@@ -37,37 +37,38 @@ public class PC {
             if (wornitems.isEmpty()) {
                 for (int i = 0; i < items.size(); i++) {
                     if (x[1].equalsIgnoreCase(items.get(i).id) && items.get(i).isWeareable) {
-                        if (items.get(i).getClass().equals("Trinked")) {
-                            System.out.println("trinked");
-                        }
                         wornitems.add(items.get(i));
                         System.out.println("You're now wearing a " + items.get(i).name);
                         items.remove(i);
-                        break;
-                    }else{
+                        return;
+                    } else {
                         System.out.println("You cannot wear that"); //NotWeareableException
-                        break;
+                        return;
                     }
                 }
             } else {
-                boolean isWearing = false;
-                for (int i = 0; i < wornitems.size(); i++) {
-                    for (int j = 0; j < items.size(); j++) {
-                        if (x[1].equalsIgnoreCase(items.get(j).id) && items.get(j).isWeareable) {
-                            if (items.get(j).wearloc.equals(wornitems.get(i).wearloc)) {
-                                System.out.println("You already have something worn in that location");
-                                isWearing = true;
-                            }
-                        }else{
+                if (wornitems.size() == 2) {
+                    System.out.println("You cannot wear anything more");
+                } else {
+                    boolean isWearing = false;
+                    for (int i = 0; i < wornitems.size(); i++) {
+                        for (int j = 0; j < items.size(); j++) {
+                            if (x[1].equalsIgnoreCase(items.get(j).id) && items.get(j).isWeareable) {
+                                if (items.get(j).wearloc.equals(wornitems.get(i).wearloc)) {
+                                    System.out.println("You already have something worn in that location");
+                                    isWearing = true;
+                                }
+                            } else {
                                 System.out.println("You cannot wear that"); //NotWeareableException
                                 break;
                             }
-                    }
-                    if (!isWearing) {
-                        wornitems.add(items.get(i));
-                        System.out.println("You're now wearing a " + items.get(i).name);
-                        items.remove(i);
-                        break;
+                        }
+                        if (!isWearing) {
+                            wornitems.add(items.get(i));
+                            System.out.println("You're now wearing a " + items.get(i).name);
+                            items.remove(i);
+                            break;
+                        }
                     }
                 }
             }
@@ -84,8 +85,6 @@ public class PC {
                     System.out.println("You remove " + wornitems.get(i).name);
                     items.add(wornitems.get(i));
                     wornitems.remove(i);
-                    System.out.println(items.size());
-                    System.out.println(wornitems.size());
                 }
             }
         }
@@ -120,5 +119,5 @@ public class PC {
         this.MAXHP = MAXHP;
         HP = MAXHP;
     }
-    
+
 }

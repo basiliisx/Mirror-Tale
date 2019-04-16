@@ -16,6 +16,6 @@ public abstract class Weapon extends Item {
     Integer ARM; //Armour (Shields)
     public Weapon() {
         isWeareable = true;
-        wearloc = "hand";
+        wearloc = "Weapon";
     }
 }

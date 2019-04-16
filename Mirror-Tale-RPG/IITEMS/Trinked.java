@@ -15,6 +15,6 @@ public abstract class Trinked extends Item {
     
     public Trinked(){
         isWeareable = true;
-        wearloc = "body";
+        wearloc = "Trinked";
     }
 }

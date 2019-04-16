@@ -19,37 +19,41 @@ public class Combat_logic {
                         if (x[1].equalsIgnoreCase(Game_objects.room.get(i).npc.get(j).id)) {
 
                             //Start PC turn
-                            Integer ATK;
-                            Integer TATK;
-                            Integer ACC;
+                            Integer ATK = 0;
+                            Integer TATK = 0;
+                            Integer ACC = 0;
                             Integer ARM;
                             Random RNG = new Random();
+                            for (int k = 0; k < Game_objects.pc.wornitems.size(); k++) {
+                                if (Game_objects.pc.wornitems.get(k).wearloc.equals("Weapon")) {
+                                    Weapon userWeapon = (Weapon) Game_objects.pc.wornitems.get(k);
+                                    ATK = userWeapon.DMG;
+                                    TATK = userWeapon.TDMG;
+                                    ACC = userWeapon.ACC;
+                                    break;
+                                }
+                            }
+                            for (int k = 0; k < Game_objects.pc.wornitems.size(); k++) {
+                                if (Game_objects.pc.wornitems.get(k).wearloc.equals("Trinked")) {
+                                    Trinked userTrinked = (Trinked) Game_objects.pc.wornitems.get(k);
+                                    ARM = userTrinked.ARM;
+                                    ACC += userTrinked.ACC;
+                                    break;
+                                }
+                            }
 
-                            Weapon userWeapon = (Weapon) Game_objects.pc.wornitems.get(0);
-                            if (userWeapon == null) {
-                                ATK = 0;
-                                TATK = 0;
-                                ACC = 0;
-                            } else {
-                                ATK = userWeapon.DMG;
-                                TATK = userWeapon.TDMG;
-                                ACC = userWeapon.ACC;
-                            }
-                            Trinked userTrinked = (Trinked) Game_objects.pc.wornitems.get(1);
-                            if (userTrinked == null) {
-                                ARM = 0;
-                            } else {
-                                ARM = userTrinked.ARM;
-                                ACC += userTrinked.ACC;
-                            }
                             Integer Damage = ATK - Game_objects.room.get(i).npc.get(j).armour;
                             if (Damage < 0) {
                                 Damage = TATK;
                             } else {
                                 Damage += TATK;
                             }
-
-                            if (((RNG.nextInt(100) + 1) + ACC) >= 100) {
+                            Integer accuracycheck = ((RNG.nextInt(100) + 1) + ACC);
+                            System.out.println(accuracycheck);
+                            System.out.println(ATK);
+                            System.out.println(TATK);
+                            System.out.println(ACC);
+                            if (accuracycheck >= 50) {
                                 Game_objects.room.get(i).npc.get(j).hp -= Damage;
                                 System.out.println("You hit " + Game_objects.room.get(i).npc.get(j).name + " for " + Damage);
                             } else {

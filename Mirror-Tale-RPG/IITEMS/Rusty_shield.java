@@ -15,9 +15,9 @@ public class Rusty_shield extends Weapon {
         id = "Rusty_shield";
         desc = "A rusty shield is flat in front of you";
         fulldesc = "You could really think that this shield was made by goblins. Now that you think of it, it probably is";
-        ACC = 10;
         DMG = 5;
         TDMG = 2;
+        ACC = 10;
         ARM = 10;
     }
 }

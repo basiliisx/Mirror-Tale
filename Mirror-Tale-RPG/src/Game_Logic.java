@@ -151,7 +151,7 @@ public class Game_Logic {
     }
 
     public enum commands {
-        look, exit, get, wear, remove, help, move, drop
+        look, exit, get, wear, remove, help, move, drop, atack
     }
 
     /**
@@ -271,7 +271,7 @@ public class Game_Logic {
                 }
                 System.out.println("Wearing:");
                 for (int i = 0; i < Game_objects.pc.wornitems.size(); i++) {
-                    System.out.println(Game_objects.pc.wornitems.get(i).name + " in " + Game_objects.pc.wornitems.get(i).wearloc);
+                    System.out.println(Game_objects.pc.wornitems.get(i).name + " : " + Game_objects.pc.wornitems.get(i).wearloc);
                 }
             }
             for (int i = 0; i < Game_objects.room.size(); i++) {
@@ -483,6 +483,9 @@ public class Game_Logic {
                             break;
                         case drop:
                             System.out.println("Allows you to drop an item that you have in your inventory");
+                            break;
+                        case atack:
+                            System.out.println("Allows you to deliver a (posible) deathblow to your enemy foes");
                             break;
                     }
                 }
