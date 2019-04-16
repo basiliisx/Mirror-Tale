@@ -13,8 +13,7 @@ public class MirrorTaleRPG {
     static Game_Logic gl = new Game_Logic();
 
     public void main() {
-        Game_objects.initializeNPCArray();
-        Game_objects.initializeITEMArray();
+        
         while (true) {
             game_loop();
         }

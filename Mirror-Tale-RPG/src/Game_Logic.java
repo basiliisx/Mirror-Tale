@@ -21,18 +21,18 @@ public class Game_Logic {
      * Creacion del mapa
      */
     public Game_Logic() {
-        //Creacion de una sala
+        Game_objects.initializeNPCArray();
+        Game_objects.initializeITEMArray();
         Game_objects.room.add(new Room(0));
         List<String> roomInfo = new ArrayList<>();
         try {
             roomInfo = readLines("Textfiles/RoomDescriptions.txt");
-            //*-System.out.println(roomInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }
         for (int i = 0; i < roomInfo.size(); i++) {
             String[] firstWord = roomInfo.get(i).split(" ");
-            String[] everythigElse = roomInfo.get(i).split(": "); //this
+            String[] everythigElse = roomInfo.get(i).split(": ");
             if (firstWord[0].equals("RoomName:")) {
                 Integer currentRoomSize = Game_objects.room.size();
                 Game_objects.room.add(new Room(currentRoomSize));
@@ -67,7 +67,72 @@ public class Game_Logic {
                 }
             }
         }
+        crear_mobs(roomInfo);
+        crear_items(roomInfo);
+    }
 
+    /**
+     * Summonea todos los mobs dentro del mapa
+     *
+     * @param x
+     */
+    private void crear_mobs(List<String> x) {
+        try {
+            x = readLines("Textfiles/mobs.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < x.size(); i++) {
+            String[] mobs = x.get(i).split(" ");
+
+            for (int j = 0; j < Game_objects.NPCDataBase.size(); j++) {
+                NPC localNPC = (NPC) Game_objects.NPCDataBase.get(j);
+                if (localNPC.id.equalsIgnoreCase(mobs[0])) {
+                    for (int k = 0; k < Game_objects.room.size(); k++) {
+                        if (Game_objects.room.get(k).number == Integer.parseInt(mobs[1])) {
+                            try {
+                                Game_objects.room.get(k).npc.add((NPC) Class.forName(localNPC.id).newInstance());
+                                System.out.println("You've summoned " + Game_objects.room.get(k).npc.get(Game_objects.room.get(k).npc.size() - 1).name);
+                            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Crea todos los objetos dentro del mapa
+     *
+     * @param x
+     */
+    private void crear_items(List<String> x) {
+        try {
+            x = readLines("Textfiles/items.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < x.size(); i++) {
+            String[] items = x.get(i).split(" ");
+
+            for (int j = 0; j < Game_objects.ITEMDataBase.size(); j++) {
+                Item localITEM = (Item) Game_objects.ITEMDataBase.get(j);
+                if (localITEM.id.equalsIgnoreCase(items[0])) {
+                    for (int k = 0; k < Game_objects.room.size(); k++) {
+                        if (Game_objects.room.get(k).number == Integer.parseInt(items[1])) {
+                            try {
+                                Game_objects.room.get(k).item.add((Item) Class.forName(localITEM.id).newInstance());
+                                System.out.println("You've summoned " + Game_objects.room.get(k).item.get(Game_objects.room.get(k).item.size() - 1).name);
+                            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -86,7 +151,7 @@ public class Game_Logic {
     }
 
     public enum commands {
-        look, exit, summon, create, get, wear, remove, help, move, drop
+        look, exit, get, wear, remove, help, move, drop
     }
 
     /**
@@ -96,35 +161,35 @@ public class Game_Logic {
      * @param x
      */
     public void processCommand(String[] x) {
-        if (x[0].equals("look")) {
-            look(x);
-        }
-        if (x[0].equals("exit")) {
-            exitgame();
-        }
-        if (x[0].equals("summon")) {
-            summon(x);
-        }
-        if (x[0].equals("create")) {
-            create_item(x);
-        }
-        if (x[0].equals("get")) {
-            get(x);
-        }
-        if (x[0].equals("wear")) {
-            Game_objects.pc.wear(x);
-        }
-        if (x[0].equals("remove")) {
-            Game_objects.pc.remove(x);
-        }
-        if (x[0].equals("help")) {
-            help(x);
-        }
-        if (x[0].equals("move")) {
-            move(x);
-        }
-        if (x[0].equals("drop")) {
-            drop(x);
+        switch (x[0]) {
+            case "look":
+                look(x);
+                break;
+            case "get":
+                get(x);
+                break;
+            case "wear":
+                Game_objects.pc.wear(x);
+                break;
+            case "drop":
+                Game_objects.pc.drop(x);
+                break;
+            case "remove":
+                Game_objects.pc.remove(x);
+                break;
+            case "move":
+                move(x);
+                break;
+            case "help":
+                help(x);
+                break;
+            case "exit":
+                exitgame();
+                break;
+            default:
+                System.out.println("Not a valid option");
+                break;
+
         }
     }
 
@@ -135,7 +200,7 @@ public class Game_Logic {
      * @return
      * @throws IOException
      */
-    public List<String> readLines(String path) throws IOException {
+    private List<String> readLines(String path) throws IOException {
         FileReader fileReader = new FileReader(path);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         List<String> lines = new ArrayList<>();
@@ -155,10 +220,12 @@ public class Game_Logic {
         Scanner sc = new Scanner(System.in);
         Game_objects.pc.name = sc.nextLine();
         System.out.println("By the grace of the creator, you have been given some stats");
-        Game_objects.pc.HP = 100;
+        Game_objects.pc.setMAXHP(100);
         Game_objects.pc.ACC = 75;
-        Game_objects.pc.inRoom = 2;
-        System.out.println(Game_objects.pc.look() + "\n" + "Those are your stats, hero");
+        Game_objects.pc.inRoom = 1;
+        System.out.println(Game_objects.pc.look() + "\n" + "Those are your stats, hero" + "\n\n");
+        String[] nll = {"null"};
+        look(nll);
     }
 
     /**
@@ -267,7 +334,9 @@ public class Game_Logic {
                         String[] exitArray = exitRequested.split(" ");
                         if (x[1].equalsIgnoreCase(exitArray[0])) {
                             Game_objects.pc.inRoom = Integer.parseInt(exitArray[1]);
-                            System.out.println("You leave " + exitArray[0]);
+                            System.out.println("You leave " + exitArray[0] + "\n\n");
+                            String[] y = {"null"};
+                            look(y);
                         }
                     }
                 }
@@ -317,46 +386,28 @@ public class Game_Logic {
             System.out.println("Get what?");
         }
         if (x.length == 2) {
-            for (int i = 0; i < Game_objects.ITEMDataBase.size(); i++) {
-                for (int j = 0; j < Game_objects.room.size(); j++) {
-                    if (Game_objects.room.get(j).number == Game_objects.pc.inRoom) {
-                        for (int k = 0; k < Game_objects.room.get(j).item.size(); k++) {
-                            if (x[1].equalsIgnoreCase(Game_objects.room.get(j).item.get(k).id)) {
-                                Item localitem = (Item) Game_objects.room.get(j).item.get(k);
-
-                                Game_objects.pc.items.add(localitem);
-                                System.out.println("You picked up " + localitem.name);
-                                Game_objects.room.get(j).item.remove(k);
-                                break;
+            Integer size = Game_objects.pc.items.size();
+            Integer invsize = Game_objects.pc.inventorySize;
+            if (size >= invsize) {
+                System.out.println("You cannot get more objects");
+            } else {
+                for (int i = 0; i < Game_objects.ITEMDataBase.size(); i++) {
+                    for (int j = 0; j < Game_objects.room.size(); j++) {
+                        if (Game_objects.room.get(j).number == Game_objects.pc.inRoom) {
+                            for (int k = 0; k < Game_objects.room.get(j).item.size(); k++) {
+                                if (x[1].equalsIgnoreCase(Game_objects.room.get(j).item.get(k).id)) {
+                                    Item localitem = (Item) Game_objects.room.get(j).item.get(k);
+                                    Game_objects.pc.items.add(localitem);
+                                    System.out.println("You picked up " + localitem.name);
+                                    Game_objects.room.get(j).item.remove(k);
+                                    return;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    }
 
-    /**
-     * Permite eliminar objetos del inventario del usuario
-     *
-     * @param x
-     */
-    public void drop(String[] x) {
-        if (x.length == 1) {
-            System.out.println("Drop what?");
-        }
-        if (x.length == 2) {
-            for (int i = 0; i < Game_objects.pc.items.size(); i++) {
-                if (x[1].equalsIgnoreCase(Game_objects.pc.items.get(i).id)) {
-                    for (int j = 0; j < Game_objects.room.size(); j++) {
-                        if (Game_objects.room.get(j).number == Game_objects.pc.inRoom) {
-                            Game_objects.room.get(j).item.add(Game_objects.pc.items.get(i));
-                            System.out.println("You droped a " + Game_objects.pc.items.get(i).name);
-                            Game_objects.pc.items.remove(i);
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -405,45 +456,31 @@ public class Game_Logic {
         if (x.length == 2) {
             for (int i = 0; i < commands.values().length; i++) {
                 if (x[1].equalsIgnoreCase(commands.values()[i].toString())) {
-                    if (x[1].equalsIgnoreCase("look")) {
-                        System.out.println("Allows you to see what's inside a room." + "\n" + "You can also check you'r stats by using look self and see other creature or item stats by doing so." + "\n" + "If you want to check an item you have, use look self and the item id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("exitgame")) {
-                        System.out.println("Allows you to exit the game");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("summon")) {
-                        System.out.println("Allows you to summon a creature given the NPC id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("create")) {
-                        System.out.println("Allows you to create an item given the id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("get")) {
-                        System.out.println("Allows you to grab an item and put it in your inventory given the id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("wear")) {
-                        System.out.println("Allows you to wear an item. Only worn items apply it's bonuses given the id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("remove")) {
-                        System.out.println("Allows you to remove one worn item given the id");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("help")) {
-                        System.out.println("Allows you to see all user commands");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("move")) {
-                        System.out.println("Allows you to move to another room given the orientation");
-                        break;
-                    }
-                    if (x[1].equalsIgnoreCase("drop")) {
-                        System.out.println("Allows you to drop an item that you have in your inventory");
-                        break;
+                    switch (commands.values()[i]) {
+                        case look:
+                            System.out.println("Allows you to see what's inside a room." + "\n" + "You can also check you'r stats by using look self and see other creature or item stats by doing so." + "\n" + "If you want to check an item you have, use look self and the item id");
+                            break;
+                        case exit:
+                            System.out.println("Allows you to exit the game");
+                            break;
+                        case get:
+                            System.out.println("Allows you to grab an item and put it in your inventory given the id");
+                            break;
+                        case wear:
+                            System.out.println("Allows you to wear an item. Only worn items apply it's bonuses given the id");
+                            break;
+                        case remove:
+                            System.out.println("Allows you to remove one worn item given the id");
+                            break;
+                        case help:
+                            System.out.println("Allows you to see all user commands");
+                            break;
+                        case move:
+                            System.out.println("Allows you to move to another room given the orientation");
+                            break;
+                        case drop:
+                            System.out.println("Allows you to drop an item that you have in your inventory");
+                            break;
                     }
                 }
             }
